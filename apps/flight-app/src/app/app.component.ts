@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoggerService } from '@flight-workspace/logger-lib';
+import { AuthLibService } from '@flight-workspace/shared/auth-lib';
 
 @Component({
   selector: 'flight-app',
@@ -7,8 +7,9 @@ import { LoggerService } from '@flight-workspace/logger-lib';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor(private loggerService: LoggerService) {
-    this.loggerService.log('log');
-    this.loggerService.debug('debug');
+  title = 'shell';
+
+  constructor(private authService: AuthLibService) {
+    this.authService.login('Lukas', null);
   }
 }

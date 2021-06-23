@@ -104,6 +104,9 @@
     },
     "luggage-feature-report-loss": {
       "tags": ["domain:luggage", "type:feature"]
+    },
+    "shared-auth-lib": {
+      "tags": ["domain:shared", "type:util"]
     }
   }
 }

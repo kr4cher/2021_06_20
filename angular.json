@@ -42,7 +42,7 @@
       "prefix": "flight-workspace",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "ngx-build-plus:browser",
           "options": {
             "outputPath": "dist/apps/flight-app",
             "index": "apps/flight-app/src/index.html",
@@ -66,7 +66,9 @@
             "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "extraWebpackConfig": "apps/flight-app/webpack.config.js",
+            "commonChunk": false
           },
           "configurations": {
             "production": {
@@ -94,18 +96,22 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "extraWebpackConfig": "apps/flight-app/webpack.prod.config.js"
             }
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "ngx-build-plus:dev-server",
           "options": {
-            "browserTarget": "flight-app:build"
+            "browserTarget": "flight-app:build",
+            "extraWebpackConfig": "apps/flight-app/webpack.config.js",
+            "port": 4200
           },
           "configurations": {
             "production": {
-              "browserTarget": "flight-app:build:production"
+              "browserTarget": "flight-app:build:production",
+              "extraWebpackConfig": "apps/flight-app/webpack.prod.config.js"
             }
           }
         },
@@ -125,11 +131,12 @@
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "ngx-build-plus:karma",
           "outputs": ["coverage/apps/flight-app"],
           "options": {
             "jestConfig": "apps/flight-app/jest.config.js",
-            "passWithNoTests": true
+            "passWithNoTests": true,
+            "extraWebpackConfig": "apps/flight-app/webpack.config.js"
           }
         }
       }
@@ -740,7 +747,7 @@
           "defaultConfiguration": "development",
           "options": {
             "extraWebpackConfig": "apps/passenger/webpack.config.js",
-            "port": 3000
+            "port": 1234
           }
         },
         "extract-i18n": {
@@ -1133,6 +1140,46 @@
             "lintFilePatterns": [
               "libs/luggage/feature-report-loss/src/**/*.ts",
               "libs/luggage/feature-report-loss/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "shared-auth-lib": {
+      "projectType": "library",
+      "root": "libs/shared/auth-lib",
+      "sourceRoot": "libs/shared/auth-lib/src",
+      "prefix": "flight-workspace",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:ng-packagr-lite",
+          "options": {
+            "project": "libs/shared/auth-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/shared/auth-lib/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/shared/auth-lib/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/auth-lib"],
+          "options": {
+            "jestConfig": "libs/shared/auth-lib/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/auth-lib/src/**/*.ts",
+              "libs/shared/auth-lib/src/**/*.html"
             ]
           }
         }

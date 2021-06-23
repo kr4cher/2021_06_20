@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { LoggerModule } from '@flight-workspace/logger-lib';
 import { FlightCancellingModule } from './flight-booking/flight-cancelling/flight-cancelling.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -16,14 +17,16 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CustomLogFormatterService } from './shared/logging/custom-log-formatter.service';
 import { SharedModule } from './shared/shared.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { FlightLookaheadComponent } from './flight-lookahead/flight-lookahead.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     HttpClientModule,
-    FlightBookingModule,
-
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+
+    FlightBookingModule,
     FlightCancellingModule,
 
     FlightLibModule.forRoot(),
@@ -40,6 +43,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     NavbarComponent,
     HomeComponent,
     BasketComponent,
+    FlightLookaheadComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
